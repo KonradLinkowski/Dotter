@@ -18,6 +18,15 @@
         <input type="range" id="ratio" min="0.01" max="1" step="0.01">
         <span id="ratio-text"></span>
       </div>
+      <div class="dropzone" id="dropzone">
+        <label for="files" class="dropzone-container">
+          <div class="file-icon">+</div>
+          <div class="dropzone-title">
+            Drag and drop your image or <span class="browse">browse</span> for an image
+          </div>
+        </label>
+        <input id="files" name="files[]" type="file" class="file-input" accept="image/x-png,image/jpeg">
+      </div>
     </div>
   </section>
 </body>

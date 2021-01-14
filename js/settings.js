@@ -12,12 +12,8 @@ $ratioText.textContent = $ratio.value
 
 export const events = {
   RATIO_CHANGE: Symbol('ratio change'),
-  RATIO_INPUT: Symbol('ratio input')
-}
-
-export function setRatio(value) {
-  $ratio.value = value
-  $ratioText.textContent = value
+  RATIO_INPUT: Symbol('ratio input'),
+  FILE_UPLOAD: Symbol('file upload')
 }
 
 export function listen(event, callback) {
@@ -29,7 +25,58 @@ export function listen(event, callback) {
     [events.RATIO_INPUT]: () => {
       callback($ratio.value)
       $ratio.addEventListener('input', () => callback($ratio.value))
-    }
+    },
+    [events.FILE_UPLOAD]: () => addFileListeners(callback)
   }
   map[event]()
 }
+
+function addFileListeners(callback) {
+  const $dropArea = document.querySelector('#dropzone');
+
+  ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+    $dropArea.addEventListener(eventName, preventDefaults, false)
+    document.body.addEventListener(eventName, preventDefaults, false)
+  });
+  ["dragenter", "dragover"].forEach((eventName) => {
+    $dropArea.addEventListener(eventName, highlight, false)
+  });
+  ["dragleave", "drop"].forEach((eventName) => {
+    $dropArea.addEventListener(eventName, unhighlight, false)
+  });
+  
+  $dropArea.addEventListener("drop", handleDrop, false)
+  $dropArea.addEventListener("input", handleChange, false)
+  
+  function preventDefaults(e) {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  function highlight() {
+    $dropArea.classList.add("highlight")
+  }
+  
+  function unhighlight() {
+    $dropArea.classList.remove("highlight")
+  }
+  
+  function handleChange({ target }) {
+    handleFiles(target.files)
+  }
+  
+  function handleDrop({ dataTransfer }) {
+    handleFiles(dataTransfer.files)
+  }
+  
+  function handleFiles(file) {
+    if (file.length === 0) {
+      console.error('No file provided')
+      return
+    }
+    const reader = new FileReader()
+    reader.addEventListener('loadend', () => callback(reader.result))
+    reader.readAsDataURL(file[0])
+  }
+}
+  
