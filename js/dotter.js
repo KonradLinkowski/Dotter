@@ -1,23 +1,50 @@
 export function createSVG(pixels, ratio = 1) {
   const columns = Math.floor(pixels.width * ratio)
   const rows = Math.floor(pixels.height * ratio)
-  const jump = 1 / ratio
-  const dots = getDots(pixels, columns, rows, jump)
-  return wrapSVG(columns - 1, rows - 1, dots.map(createCircle).join('\n'))
+  const dots = getDots(pixels, columns, rows, ratio)
+  return wrapSVG(columns, rows, dots.map(createCircle).join('\n'))
 }
 
-function getDots(pixels, columns, rows, jump) {
+function getDots(pixels, columns, rows, ratio) {
+  const jump = 1 / ratio
   const dots = []
   for (let y = 0; y < rows; y += 1) {
     for (let x = 0; x < columns; x += 1) {
-      dots.push({ x, y, color: pixels.get(x * jump, y * jump) })
+      const side = Math.floor(jump)
+      const avg = calcAverage(
+        Math.floor(x * jump),
+        Math.floor(y * jump),
+        side,
+        side
+      )
+      dots.push({ x, y, color: avg })
     }
   }
   return dots
+
+  function calcAverage(x, y, width, height) {
+    let sum = { r: 0, g: 0, b: 0, a: 0 }
+    for (let i = x; i < x + width; i += 1) {
+      for (let j = y; j < y + height; j += 1) {
+        const color = pixels.get(i, j)
+        sum.r += color.r
+        sum.g += color.g
+        sum.b += color.b
+        sum.a += color.a
+      }
+    }
+    const area = width * height
+    return {
+      r: sum.r / area,
+      g: sum.g / area,
+      b: sum.b / area,
+      a: sum.a / area
+    }
+  }
 }
 
 function wrapSVG(width, height, data) {
-  return `<svg class="dotter" viewBox="0.5 0.5 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${data}</svg>`
+  return `<svg class="dotter" viewBox="-0.5 -0.5 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${data}</svg>`
 }
 
 function createCircle({ x, y, color }) {
@@ -26,5 +53,5 @@ function createCircle({ x, y, color }) {
 }
 
 function getRGBA({ r, g, b, a }) {
-  return `rgba(${r}, ${g}, ${b}, ${a})`
+  return `rgba(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)}, ${Math.floor(a)})`
 }
