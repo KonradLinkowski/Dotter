@@ -17,7 +17,7 @@ function getDots(pixels, columns, rows, jump) {
 }
 
 function wrapSVG(width, height, data) {
-  return `<svg viewBox="0.5 0.5 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${data}</svg>`
+  return `<svg class="dotter" viewBox="0.5 0.5 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${data}</svg>`
 }
 
 function createCircle({ x, y, color }) {
