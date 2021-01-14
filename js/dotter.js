@@ -2,7 +2,11 @@ export function createSVG(pixels, ratio = 1) {
   const columns = Math.floor(pixels.width * ratio)
   const rows = Math.floor(pixels.height * ratio)
   const dots = getDots(pixels, columns, rows, ratio)
-  return wrapSVG(columns, rows, dots.map(createCircle).join('\n'))
+  return {
+    width: columns * 0.5 * 100,
+    height: rows * 0.5 * 100,
+    svg: wrapSVG(columns, rows, dots.map(createCircle).join('\n'))
+  }
 }
 
 function getDots(pixels, columns, rows, ratio) {

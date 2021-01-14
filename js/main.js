@@ -23,16 +23,16 @@ import { createSVG } from './dotter.js'
 
   function recalculate() {
     svg = createSVG(pixels, ratio)
-    $main.innerHTML = svg
+    $main.innerHTML = svg.svg
   }
 
   function downloadPNG() {
-    const blob = new Blob([svg], { type:'image/svg+xml;charset=utf-8' })
+    const blob = new Blob([svg.svg], { type:'image/svg+xml;charset=utf-8' })
     const $img = new Image()
     $img.onload = () => {
       const $canvas = document.createElement('canvas')
-      $canvas.width = $img.width
-      $canvas.height = $img.height
+      $canvas.width = svg.width
+      $canvas.height = svg.height
       $canvas.getContext('2d').drawImage($img, 0, 0)
       const url = $canvas.toDataURL()
       const $link = document.createElement('a')
@@ -46,7 +46,7 @@ import { createSVG } from './dotter.js'
   }
 
   function downloadSVG() {
-    const blob = new Blob([svg])
+    const blob = new Blob([svg.svg])
     const $link = document.createElement('a')
     $link.download = "dots.svg";
     $link.href = URL.createObjectURL(blob)
