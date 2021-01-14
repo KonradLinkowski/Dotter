@@ -1,20 +1,24 @@
-import { listen, events } from './settings.js'
+import { listen, events, setRange, defaults } from './settings.js'
 import { loadPixels } from './image.js'
 import { createSVG } from './dotter.js'
 
 (async () => {
   const $main = document.querySelector('#main')
-  let ratio = null
+  let columns = null
   let svg = null
   let pixels = await loadPixels('images/mona-lisa-small.jpg')
 
   listen(events.FILE_UPLOAD, async blob => {
+    columns = defaults.columns
     pixels = await loadPixels(blob)
+    setRange(pixels.width)
     recalculate()
   })
+
+  setRange(pixels.width)
   
-  listen(events.RATIO_CHANGE, value => {
-    ratio = value
+  listen(events.COLUMNS_CHANGE, value => {
+    columns = value
     recalculate()
   })
 
@@ -22,7 +26,7 @@ import { createSVG } from './dotter.js'
   listen(events.DOWNLOAD_PNG, downloadPNG)
 
   function recalculate() {
-    svg = createSVG(pixels, ratio)
+    svg = createSVG(pixels, columns)
     $main.innerHTML = svg.svg
   }
 

@@ -1,5 +1,5 @@
-export function createSVG(pixels, ratio = 1) {
-  const columns = Math.floor(pixels.width * ratio)
+export function createSVG(pixels, columns = 50) {
+  const ratio = columns / pixels.width
   const rows = Math.floor(pixels.height * ratio)
   const dots = getDots(pixels, columns, rows, ratio)
   return {

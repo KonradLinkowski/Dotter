@@ -1,35 +1,42 @@
-const defaults = {
-  ratio: 0.2
+export const defaults = {
+  columns: 50
 }
 
-const $ratio = document.querySelector('#ratio')
-const $ratioText = document.querySelector('#ratio-text')
+const $columns = document.querySelector('#columns')
+const $columnsText = document.querySelector('#columns-text')
 
 const $downloadPNG = document.querySelector('#download-png')
 const $downloadSVG = document.querySelector('#download-svg')
 
-$ratio.addEventListener('input', () => $ratioText.textContent = $ratio.value)
+$columns.addEventListener('input', () => $columnsText.textContent = $columns.value)
 
-$ratio.value = defaults.ratio
-$ratioText.textContent = $ratio.value
+$columns.value = defaults.columns
+$columnsText.textContent = $columns.value
 
 export const events = {
-  RATIO_CHANGE: Symbol('ratio change'),
-  RATIO_INPUT: Symbol('ratio input'),
+  COLUMNS_CHANGE: Symbol('columns change'),
+  COLUMNS_INPUT: Symbol('columns input'),
   FILE_UPLOAD: Symbol('file upload'),
   DOWNLOAD_SVG: Symbol('download svg'),
   DOWNLOAD_PNG: Symbol('download png')
 }
 
+export function setRange(max, min = 1) {
+  $columns.max = max
+  $columns.min = min
+  $columns.value = defaults.columns
+  $columnsText.textContent = defaults.columns
+}
+
 export function listen(event, callback) {
   const map = {
-    [events.RATIO_CHANGE]: () => {
-      callback($ratio.value)
-      $ratio.addEventListener('change', () => callback($ratio.value))
+    [events.COLUMNS_CHANGE]: () => {
+      callback($columns.value)
+      $columns.addEventListener('change', () => callback($columns.value))
     },
-    [events.RATIO_INPUT]: () => {
-      callback($ratio.value)
-      $ratio.addEventListener('input', () => callback($ratio.value))
+    [events.COLUMNS_INPUT]: () => {
+      callback($columns.value)
+      $columns.addEventListener('input', () => callback($columns.value))
     },
     [events.FILE_UPLOAD]: () => addFileListeners(callback),
     [events.DOWNLOAD_PNG]: () => $downloadPNG.addEventListener('click', () => callback()),
