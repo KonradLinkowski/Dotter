@@ -1,3 +1,7 @@
+:root {
+  --main-color: #007bff;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -44,6 +48,7 @@ body {
 .range-field input {
   flex: 1;
   margin-right: 1rem;
+  min-width: 2rem;
 }
 
 .range-field span {
@@ -58,7 +63,7 @@ body {
 }
 
 .dropzone.highlight, .dropzone:hover {
-  border: 2px dotted #007bff;
+  border: 2px dotted var(--main-color);
 }
 
 .dropzone .dropzone-container {
@@ -81,7 +86,7 @@ body {
 
 .dropzone .dropzone-container .browse {
   text-decoration: underline;
-  color: #007bff;
+  color: var(--main-color);
   cursor: pointer;
 }
 
@@ -106,7 +111,7 @@ body {
   justify-content: center;
   font-weight: 500;
   font-size: 2rem;
-  color: #007bff;
+  color: var(--main-color);
 }
 
 .file-icon,
@@ -147,12 +152,15 @@ body {
 .download-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0.5rem -0.5rem;
 }
 
 .button {
-  padding: 1rem;
-  background: #007bff;
+  flex: 1;
+  padding: 0.5rem;
+  background: var(--main-color);
   color: white;
   font-size: unset;
   line-height: unset;
@@ -161,7 +169,8 @@ body {
   box-shadow: none;
   border-radius: 0;
   font-family: inherit;
-  width: 40%;
+  flex-wrap: wrap;
+  margin: 0.5rem;
 }
 
 .button:hover {
@@ -184,4 +193,57 @@ body {
     border-top: 2px solid black;
     width: 100%;
   }
+}
+
+.spinner {
+  z-index: 1000;
+  background-color: #0006;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner svg {
+  width: 6em;
+  transform-origin: center;
+  animation: rotate 2s linear infinite;
+}
+.spinner circle {
+  fill: none;
+  stroke: var(--main-color);
+  stroke-width: 4;
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dashoffset: -125px;
+  }
+}
+
+[hidden] {
+  display: none !important;
 }
