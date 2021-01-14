@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="dotter" viewBox="-0.45 -0.45 1.9 1.9">
+  <circle cx="0" cy="0" r="0.45" fill="rgba(111, 117, 69, 255)"/>
+  <circle cx="1" cy="0" r="0.45" fill="rgba(91, 87, 59, 255)"/>
+  <circle cx="0" cy="1" r="0.45" fill="rgba(199, 162, 81, 255)"/>
+  <circle cx="1" cy="1" r="0.45" fill="rgba(29, 16, 31, 255)"/>
+</svg>
