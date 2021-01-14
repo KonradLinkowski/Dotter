@@ -2,6 +2,7 @@ import { listen, events, setRange, defaults } from './settings.js'
 import { loadImageData } from './image.js'
 
 (async () => {
+  const $spinner = document.querySelector('#spinner')
   const $main = document.querySelector('#main')
   let imageData = null
   let columns = null
@@ -12,6 +13,7 @@ import { loadImageData } from './image.js'
   worker.onmessage = ({ data }) => {
     svgData = data
     $main.innerHTML = data.svg
+    $spinner.hidden = true
   }
 
   await loadNewImage('images/mona-lisa-small.jpg', false)  
@@ -31,6 +33,7 @@ import { loadImageData } from './image.js'
   listen(events.DOWNLOAD_PNG, downloadPNG)
 
   async function loadNewImage(url, recalc = true) {
+    $spinner.hidden = false
     imageData = await loadImageData(url)
     setRange(imageData.width)
     if (recalc) {
@@ -39,6 +42,7 @@ import { loadImageData } from './image.js'
   }
 
   function recalculate(imageData, columns) {
+    $spinner.hidden = false
     worker.postMessage({
       imageData,
       columns
