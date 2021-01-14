@@ -46,6 +46,10 @@ body {
   margin-right: 1rem;
 }
 
+.range-field span {
+  width: 2rem;
+}
+
 .dropzone {
   margin-top: 1rem;
   opacity: 1;
@@ -138,6 +142,30 @@ body {
   border-width: 0.625rem;
   border-style: solid;
   border-color: #f9f9fb #f9f9fb #b8bec9 #b8bec9;
+}
+
+.download-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.button {
+  padding: 1rem;
+  background: #007bff;
+  color: white;
+  font-size: unset;
+  line-height: unset;
+  cursor: pointer;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  font-family: inherit;
+  width: 40%;
+}
+
+.button:hover {
+  opacity: 0.8;
 }
 
 @media (orientation: portrait) {

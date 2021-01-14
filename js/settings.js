@@ -5,6 +5,9 @@ const defaults = {
 const $ratio = document.querySelector('#ratio')
 const $ratioText = document.querySelector('#ratio-text')
 
+const $downloadPNG = document.querySelector('#download-png')
+const $downloadSVG = document.querySelector('#download-svg')
+
 $ratio.addEventListener('input', () => $ratioText.textContent = $ratio.value)
 
 $ratio.value = defaults.ratio
@@ -13,7 +16,9 @@ $ratioText.textContent = $ratio.value
 export const events = {
   RATIO_CHANGE: Symbol('ratio change'),
   RATIO_INPUT: Symbol('ratio input'),
-  FILE_UPLOAD: Symbol('file upload')
+  FILE_UPLOAD: Symbol('file upload'),
+  DOWNLOAD_SVG: Symbol('download svg'),
+  DOWNLOAD_PNG: Symbol('download png')
 }
 
 export function listen(event, callback) {
@@ -26,7 +31,9 @@ export function listen(event, callback) {
       callback($ratio.value)
       $ratio.addEventListener('input', () => callback($ratio.value))
     },
-    [events.FILE_UPLOAD]: () => addFileListeners(callback)
+    [events.FILE_UPLOAD]: () => addFileListeners(callback),
+    [events.DOWNLOAD_PNG]: () => $downloadPNG.addEventListener('click', () => callback()),
+    [events.DOWNLOAD_SVG]: () => $downloadSVG.addEventListener('click', () => callback())
   }
   map[event]()
 }
