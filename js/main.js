@@ -1,42 +1,57 @@
 import { listen, events, setRange, defaults } from './settings.js'
-import { loadPixels } from './image.js'
-import { createSVG } from './dotter.js'
+import { loadImageData } from './image.js'
 
 (async () => {
   const $main = document.querySelector('#main')
+  let imageData = null
   let columns = null
-  let svg = null
-  let pixels = await loadPixels('images/mona-lisa-small.jpg')
+  let svgData = null
+
+  const worker = new Worker('./js/worker.js', { type: 'module' })
+
+  worker.onmessage = ({ data }) => {
+    svgData = data
+    $main.innerHTML = data.svg
+  }
+
+  await loadNewImage('images/mona-lisa-small.jpg', false)  
 
   listen(events.FILE_UPLOAD, async blob => {
     columns = defaults.columns
-    pixels = await loadPixels(blob)
-    setRange(pixels.width)
-    recalculate()
+    setRange(imageData.width)
+    loadNewImage(blob)
   })
-
-  setRange(pixels.width)
   
   listen(events.COLUMNS_CHANGE, value => {
     columns = value
-    recalculate()
+    recalculate(imageData, columns)
   })
 
   listen(events.DOWNLOAD_SVG, downloadSVG)
   listen(events.DOWNLOAD_PNG, downloadPNG)
 
-  function recalculate() {
-    svg = createSVG(pixels, columns)
-    $main.innerHTML = svg.svg
+  async function loadNewImage(url, recalc = true) {
+    imageData = await loadImageData(url)
+    setRange(imageData.width)
+    if (recalc) {
+      recalculate(imageData, columns)
+    }
+  }
+
+  function recalculate(imageData, columns) {
+    worker.postMessage({
+      imageData,
+      columns
+    })
   }
 
   function downloadPNG() {
-    const blob = new Blob([svg.svg], { type:'image/svg+xml;charset=utf-8' })
+    const blob = new Blob([svgData.svg], { type:'image/svg+xml;charset=utf-8' })
     const $img = new Image()
     $img.onload = () => {
       const $canvas = document.createElement('canvas')
-      $canvas.width = svg.width
-      $canvas.height = svg.height
+      $canvas.width = svgData.width
+      $canvas.height = svgData.height
       $canvas.getContext('2d').drawImage($img, 0, 0)
       const url = $canvas.toDataURL()
       const $link = document.createElement('a')
@@ -50,7 +65,7 @@ import { createSVG } from './dotter.js'
   }
 
   function downloadSVG() {
-    const blob = new Blob([svg.svg])
+    const blob = new Blob([svgData.svg])
     const $link = document.createElement('a')
     $link.download = "dots.svg";
     $link.href = URL.createObjectURL(blob)

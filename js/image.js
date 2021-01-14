@@ -1,4 +1,4 @@
-class Pixels {
+export class Pixels {
   constructor(imageData) {
     this.data = imageData.data
     this.width = imageData.width
@@ -16,7 +16,7 @@ class Pixels {
   }
 }
 
-export function loadPixels(src) {
+export function loadImageData(src) {
   return new Promise((resolve, reject) => {
     const image = new Image()
     image.onload = () => {
@@ -26,8 +26,7 @@ export function loadPixels(src) {
       const ctx = canvas.getContext('2d')
       ctx.drawImage(image, 0, 0)
       const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
-      const pixels = new Pixels(data)
-      resolve(pixels)
+      resolve(data)
     }
     image.onerror = () => reject(`Failed to load the image ${src}`)
     image.src = src

@@ -22,7 +22,7 @@ export const events = {
 }
 
 export function setRange(max, min = 1) {
-  $columns.max = max
+  $columns.max = Math.min(max, 256)
   $columns.min = min
   $columns.value = defaults.columns
   $columnsText.textContent = defaults.columns
@@ -31,12 +31,12 @@ export function setRange(max, min = 1) {
 export function listen(event, callback) {
   const map = {
     [events.COLUMNS_CHANGE]: () => {
-      callback($columns.value)
-      $columns.addEventListener('change', () => callback($columns.value))
+      callback(+$columns.value)
+      $columns.addEventListener('change', () => callback(+$columns.value))
     },
     [events.COLUMNS_INPUT]: () => {
-      callback($columns.value)
-      $columns.addEventListener('input', () => callback($columns.value))
+      callback(+$columns.value)
+      $columns.addEventListener('input', () => callback(+$columns.value))
     },
     [events.FILE_UPLOAD]: () => addFileListeners(callback),
     [events.DOWNLOAD_PNG]: () => $downloadPNG.addEventListener('click', () => callback()),
