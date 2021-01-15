@@ -1,5 +1,8 @@
 :root {
-  --main-color: #007bff;
+  --accent-color: #d65a31;
+  --background-color: #222831;
+  --background-shadow-color: #393e46;
+  --foreground-color: #eeeeee;
 }
 
 *, *::before, *::after {
@@ -12,11 +15,12 @@ body {
   height: 100vh;
   display: flex;
   font-family: 'Lato';
+  background-color: var(--background-color);
+  color: var(--foreground-color);
 }
 
 .main {
   flex: 1;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,7 +29,7 @@ body {
 .dotter {
   margin: 1rem;
   height: calc(100% - 1rem);
-  max-width: 100%;
+  width: 100%;
 }
 
 .settings {
@@ -43,6 +47,7 @@ body {
 .range-field {
   width: 100%;
   display: flex;
+  margin-top: 0.5rem;
 }
 
 .range-field input {
@@ -55,15 +60,50 @@ body {
   width: 2rem;
 }
 
+.slider {
+  -webkit-appearance: none;
+  height: 1rem;
+  border-radius: 0.5rem;
+  background: var(--background-shadow-color);
+  outline: none;
+  opacity: 1;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  opacity: 0.7;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--accent-color);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--accent-color);
+  cursor: pointer;
+}
+
 .dropzone {
+  --border: var(--foreground-color);
+  --background: var(--background-shadow-color);
   margin-top: 1rem;
   opacity: 1;
-  border: 2px dotted #c6ccd6;
+  background-color: var(--background);
+  border: 2px dotted var(--border);
   border-radius: 0.5rem;
 }
 
 .dropzone.highlight, .dropzone:hover {
-  border: 2px dotted var(--main-color);
+  border: 2px dotted var(--accent-color);
 }
 
 .dropzone .dropzone-container {
@@ -75,8 +115,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #8c96a8;
   z-index: 20;
+  cursor: pointer;
 }
 
 .dropzone .dropzone-container .dropzone-title {
@@ -86,7 +126,7 @@ body {
 
 .dropzone .dropzone-container .browse {
   text-decoration: underline;
-  color: var(--main-color);
+  color: var(--accent-color);
   cursor: pointer;
 }
 
@@ -111,15 +151,15 @@ body {
   justify-content: center;
   font-weight: 500;
   font-size: 2rem;
-  color: var(--main-color);
+  color: var(--accent-color);
 }
 
 .file-icon,
 .file-icon:before,
 .file-icon:after {
-  background-color: #ffffff;
+  background-color: var(--background);
   border-radius: 0.25rem;
-  border: 0.125rem solid #b8bec9;
+  border: 0.125rem solid var(--border);
 }
 
 .file-icon:before,
@@ -128,7 +168,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  border: 0.125rem solid #ccd0d8;
+  border: 0.125rem solid var(--border);
 }
 
 .file-icon:before {
@@ -146,7 +186,7 @@ body {
   border-radius: 0.25rem;
   border-width: 0.625rem;
   border-style: solid;
-  border-color: #f9f9fb #f9f9fb #b8bec9 #b8bec9;
+  border-color:  var(--background) var(--background) var(--border) var(--border);
 }
 
 .download-buttons {
@@ -159,22 +199,22 @@ body {
 
 .button {
   flex: 1;
-  padding: 0.5rem;
-  background: var(--main-color);
-  color: white;
+  padding: 1rem;
+  background: var(--accent-color);
   font-size: unset;
   line-height: unset;
+  color: inherit;
   cursor: pointer;
   border: none;
   box-shadow: none;
-  border-radius: 0;
+  border-radius: 0.5rem;
   font-family: inherit;
   flex-wrap: wrap;
   margin: 0.5rem;
 }
 
 .button:hover {
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 @media (orientation: portrait) {
@@ -182,10 +222,8 @@ body {
     flex-direction: column;
   }
 
-  .dotter {
-    width: 100%;
-    height: auto;
-    max-height: 100%;
+  .main {
+    flex: none;
   }
 
   .settings {
@@ -216,7 +254,7 @@ body {
 }
 .spinner circle {
   fill: none;
-  stroke: var(--main-color);
+  stroke: var(--accent-color);
   stroke-width: 4;
   stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;
