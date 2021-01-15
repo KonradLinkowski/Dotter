@@ -18,17 +18,19 @@ export class Pixels {
 
 export function loadImageData(src) {
   return new Promise((resolve, reject) => {
-    const image = new Image()
-    image.onload = () => {
-      const canvas = document.createElement('canvas')
-      canvas.width = image.width
-      canvas.height = image.height
-      const ctx = canvas.getContext('2d')
-      ctx.drawImage(image, 0, 0)
-      const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
-      resolve(data)
-    }
-    image.onerror = () => reject(`Failed to load the image ${src}`)
-    image.src = src
+    setTimeout(() => {
+      const image = new Image()
+      image.onload = () => {
+        const canvas = document.createElement('canvas')
+        canvas.width = image.width
+        canvas.height = image.height
+        const ctx = canvas.getContext('2d')
+        ctx.drawImage(image, 0, 0)
+        const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        resolve(data)
+      }
+      image.onerror = () => reject(`Failed to load the image ${src}`)
+      image.src = src
+    })
   })
 }
