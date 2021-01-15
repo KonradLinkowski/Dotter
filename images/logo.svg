@@ -1,0 +1,15 @@
+<svg style="width: 100vw;" viewBox="1 -11.5 46 11.8" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Varela+Round');
+      .text {
+        font-family: 'Varela Round', sans-serif;
+        fill: #eeeeee;
+      }
+    </style>
+  </defs>
+
+  <text x="0" y="0" class="text">D</text>
+  <circle cx="17" cy="-5" r="5" fill="rgba(199, 162, 81, 255)"/>
+  <text x="23" y="0" class="text">tter</text>
+</svg>
