@@ -32,10 +32,21 @@ body {
   width: 100%;
 }
 
-.settings {
+.side-panel {
   width: 25%;
   border-left: 2px solid black;
   padding: 1rem;
+}
+
+.header h1 {
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
+}
+
+.header p{
+  margin-top: 0.5rem;
+  font-size: 1.3rem;
 }
 
 .settings-field {
@@ -226,7 +237,7 @@ body {
     flex: none;
   }
 
-  .settings {
+  .side-panel {
     border-left: none;
     border-top: 2px solid black;
     width: 100%;

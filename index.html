@@ -10,29 +10,40 @@
 </head>
 <body>
   <main class="main" id="main"></main>
-  <section class="settings">
-    <h2>Settings</h2>
-    <div class="settings-field">
-      <label for="columns">Columns:</label>
-      <div class="range-field">
-        <input class="slider" type="range" id="columns" min="1" max="100" step="1">
-        <span id="columns-text"></span>
-      </div>
-    </div>
-    <div class="dropzone" id="dropzone">
-      <label for="files" class="dropzone-container">
-        <div class="file-icon">+</div>
-        <div class="dropzone-title">
-          Drag and drop your image or <span class="browse">browse</span> for an image
+  <article class="side-panel">
+    <header class="header">
+      <a href="#">
+        <img src="./images/logo.svg" alt="Dotter logo">
+        <h1>
+          Dotter
+        </h1>
+      </a>
+      <p>Convert any image to dots for no reason</p>
+    </header>
+    <section class="settings">
+      <h2>Settings</h2>
+      <div class="settings-field">
+        <label for="columns">Columns:</label>
+        <div class="range-field">
+          <input class="slider" type="range" id="columns" min="1" max="100" step="1">
+          <span id="columns-text"></span>
         </div>
-      </label>
-      <input id="files" name="files[]" type="file" class="file-input" accept="image/x-png,image/jpeg">
-    </div>
-    <div class="download-buttons">
-      <button class="button" id="download-png">Download PNG</button>
-      <button class="button" id="download-svg">Download SVG</button>
-    </div>
-  </section>
+      </div>
+      <div class="dropzone" id="dropzone">
+        <label for="files" class="dropzone-container">
+          <div class="file-icon">+</div>
+          <div class="dropzone-title">
+            Drag and drop your image or <span class="browse">browse</span> for an image
+          </div>
+        </label>
+        <input id="files" name="files[]" type="file" class="file-input" accept="image/x-png,image/jpeg">
+      </div>
+      <div class="download-buttons">
+        <button class="button" id="download-png">Download PNG</button>
+        <button class="button" id="download-svg">Download SVG</button>
+      </div>
+    </section>
+  </article>
   <div hidden id="spinner" class="spinner">
     <svg viewBox="25 25 50 50">
       <circle cx="50" cy="50" r="20"></circle>
