@@ -6,6 +6,7 @@ import { loadImageData } from './image.js'
   const $main = document.querySelector('#main')
   let imageData = null
   let columns = null
+  let lego = null;
   let svgData = null
 
   const worker = new Worker('./js/worker.js', { type: 'module' })
@@ -26,7 +27,12 @@ import { loadImageData } from './image.js'
   
   listen(events.COLUMNS_CHANGE, value => {
     columns = value
-    recalculate(imageData, columns)
+    recalculate(imageData, columns, lego)
+  })
+
+  listen(events.LEGO_CHANGE, value => {
+    lego = value
+    recalculate(imageData, columns, lego)
   })
 
   listen(events.DOWNLOAD_SVG, downloadSVG)
@@ -37,15 +43,16 @@ import { loadImageData } from './image.js'
     imageData = await loadImageData(url)
     setRange(imageData.width)
     if (recalc) {
-      recalculate(imageData, columns)
+      recalculate(imageData, columns, lego)
     }
   }
 
-  function recalculate(imageData, columns) {
+  function recalculate(imageData, columns, lego) {
     $spinner.hidden = false
     worker.postMessage({
       imageData,
-      columns
+      columns,
+      lego
     })
   }
 
