@@ -1,7 +1,9 @@
-export function createSVG(pixels, columns = 50, lego = false) {
+import { getClosest } from './colors.js';
+
+export function createSVG(pixels, columns = 50, lego = false, legoColors = false) {
   const ratio = columns / pixels.width
   const rows = Math.floor(pixels.height * ratio)
-  const dots = getDots(pixels, columns, rows, ratio)
+  const dots = getDots(pixels, columns, rows, ratio, legoColors)
   const create = lego ? createLego : createCircle
   return {
     width: columns * 0.5 * 100,
@@ -10,7 +12,7 @@ export function createSVG(pixels, columns = 50, lego = false) {
   }
 }
 
-function getDots(pixels, columns, rows, ratio) {
+function getDots(pixels, columns, rows, ratio, legoColors) {
   const jump = 1 / ratio
   const dots = []
   for (let y = 0; y < rows; y += 1) {
@@ -22,7 +24,7 @@ function getDots(pixels, columns, rows, ratio) {
         side,
         side
       )
-      dots.push({ x, y, color: avg })
+      dots.push({ x, y, color: legoColors ? getClosest(avg) : avg })
     }
   }
   return dots
@@ -79,5 +81,5 @@ function createLego({ x, y, color }) {
 }
 
 function getRGBA({ r, g, b, a }) {
-  return `rgba(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)}, ${Math.floor(a)})`
+  return `rgba(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)}, ${a != undefined ? Math.floor(a) : 1})`
 }
