@@ -1,9 +1,12 @@
 export const defaults = {
-  columns: 50
+  columns: 50,
+  lego: false
 }
 
 const $columns = document.querySelector('#columns')
 const $columnsText = document.querySelector('#columns-text')
+
+const $lego = document.querySelector('#lego')
 
 const $downloadPNG = document.querySelector('#download-png')
 const $downloadSVG = document.querySelector('#download-svg')
@@ -16,6 +19,7 @@ $columnsText.textContent = $columns.value
 export const events = {
   COLUMNS_CHANGE: Symbol('columns change'),
   COLUMNS_INPUT: Symbol('columns input'),
+  LEGO_CHANGE: Symbol('lego change'),
   FILE_UPLOAD: Symbol('file upload'),
   DOWNLOAD_SVG: Symbol('download svg'),
   DOWNLOAD_PNG: Symbol('download png')
@@ -37,6 +41,13 @@ export function listen(event, callback) {
     [events.COLUMNS_INPUT]: () => {
       callback(+$columns.value)
       $columns.addEventListener('input', () => callback(+$columns.value))
+    },
+    [events.LEGO_CHANGE]: () => {
+      callback($lego.checked)
+      $lego.addEventListener('change', () => {
+        $lego.parentNode.classList.toggle('checked', $lego.checked)
+        callback($lego.checked)
+      })
     },
     [events.FILE_UPLOAD]: () => addFileListeners(callback),
     [events.DOWNLOAD_PNG]: () => $downloadPNG.addEventListener('click', () => callback()),

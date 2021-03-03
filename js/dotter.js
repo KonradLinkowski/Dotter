@@ -1,11 +1,12 @@
-export function createSVG(pixels, columns = 50) {
+export function createSVG(pixels, columns = 50, lego = false) {
   const ratio = columns / pixels.width
   const rows = Math.floor(pixels.height * ratio)
   const dots = getDots(pixels, columns, rows, ratio)
+  const create = lego ? createLego : createCircle
   return {
     width: columns * 0.5 * 100,
     height: rows * 0.5 * 100,
-    svg: wrapSVG(columns, rows, dots.map(createCircle).join('\n'))
+    svg: wrapSVG(columns, rows, dots.map(create).join('\n'))
   }
 }
 
@@ -48,12 +49,33 @@ function getDots(pixels, columns, rows, ratio) {
 }
 
 function wrapSVG(width, height, data) {
-  return `<svg class="dotter" viewBox="-0.5 -0.5 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${data}</svg>`
+  const defs = `
+    <defs>
+      <filter height="200%" width="200%" y="-50%" x="-50%" id="blur">
+        <feGaussianBlur stdDeviation="0.2" in="SourceGraphic"/>
+      </filter>
+    </defs>
+  `
+  return `<svg class="dotter" viewBox="-0.5 -0.5 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+    ${defs}  
+    ${data}
+  </svg>`
 }
 
 function createCircle({ x, y, color }) {
   const rgba = getRGBA(color)
   return `<circle cx="${x}" cy="${y}" r="${0.45}" fill="${rgba}" />`
+}
+
+function createLego({ x, y, color }) {
+  const rgba = getRGBA(color)
+  return `
+    <g transform="translate(${x - 0.5}, ${y - 0.5})">
+      <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="#000" fill="${rgba}" />
+      <circle r="0.4" cx="0.5" cy="0.6" fill="#000" filter="url(#blur)" />
+      <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="#000" fill="${rgba}" />
+    </g>
+  `
 }
 
 function getRGBA({ r, g, b, a }) {
