@@ -204,7 +204,7 @@ export function getClosest(a) {
   let min = Number.POSITIVE_INFINITY
   let best = null
   for (const b of colors) {
-    const diff = ((a.r - b.r) ** 2 + (a.g - b.g) ** 2 + (a.b - b.b) ** 2)
+    const diff = (((a.r - b.r) * 0.3) ** 2 + ((a.g - b.g) * 0.59) ** 2 + ((a.b - b.b) * 0.11) ** 2)
     if (diff < min) {
       min = diff
       best = b
