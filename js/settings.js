@@ -1,12 +1,14 @@
 export const defaults = {
   columns: 50,
-  lego: false
+  lego: false,
+  legoColors: false
 }
 
 const $columns = document.querySelector('#columns')
 const $columnsText = document.querySelector('#columns-text')
 
 const $lego = document.querySelector('#lego')
+const $legoColors = document.querySelector('#lego-colors')
 
 const $downloadPNG = document.querySelector('#download-png')
 const $downloadSVG = document.querySelector('#download-svg')
@@ -16,10 +18,17 @@ $columns.addEventListener('input', () => $columnsText.textContent = $columns.val
 $columns.value = defaults.columns
 $columnsText.textContent = $columns.value
 
+$lego.checked = defaults.lego
+$lego.parentNode.classList.toggle('checked', $lego.checked)
+
+$legoColors.checked = defaults.legoColors
+$legoColors.parentNode.classList.toggle('checked', $legoColors.checked)
+
 export const events = {
   COLUMNS_CHANGE: Symbol('columns change'),
   COLUMNS_INPUT: Symbol('columns input'),
   LEGO_CHANGE: Symbol('lego change'),
+  LEGO_COLORS_CHANGE: Symbol('lego colors change'),
   FILE_UPLOAD: Symbol('file upload'),
   DOWNLOAD_SVG: Symbol('download svg'),
   DOWNLOAD_PNG: Symbol('download png')
@@ -47,6 +56,13 @@ export function listen(event, callback) {
       $lego.addEventListener('change', () => {
         $lego.parentNode.classList.toggle('checked', $lego.checked)
         callback($lego.checked)
+      })
+    },
+    [events.LEGO_COLORS_CHANGE]: () => {
+      callback($legoColors.checked)
+      $legoColors.addEventListener('change', () => {
+        $legoColors.parentNode.classList.toggle('checked', $legoColors.checked)
+        callback($legoColors.checked)
       })
     },
     [events.FILE_UPLOAD]: () => addFileListeners(callback),
