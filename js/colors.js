@@ -195,23 +195,29 @@ export const colors = [
 
 const cache = {}
 
-export function getClosest(a) {
-  const key = JSON.stringify(a)
+export function getClosest(initialColor) {
+  const key = JSON.stringify(initialColor)
   if (key in cache) {
     return cache[key]
   }
 
   let min = Number.POSITIVE_INFINITY
   let best = null
-  for (const b of colors) {
-    const diff = (((a.r - b.r) * 0.3) ** 2 + ((a.g - b.g) * 0.59) ** 2 + ((a.b - b.b) * 0.11) ** 2)
+  for (const legoColor of colors) {
+    const diff = (
+      ((initialColor.r - legoColor.r) * 0.3) ** 2 // red
+      + ((initialColor.g - legoColor.g) * 0.59) ** 2 // green
+      + ((initialColor.b - legoColor.b) * 0.11) ** 2 // blue
+    )
     if (diff < min) {
       min = diff
-      best = b
+      best = legoColor
     }
   }
 
-  cache[key] = best
+  const bestRBBA = { ...best, a: initialColor.a }
 
-  return best
+  cache[key] = bestRBBA
+
+  return bestRBBA
 }
