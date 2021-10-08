@@ -71,15 +71,20 @@ function createCircle({ x, y, color }) {
 
 function createLego({ x, y, color }) {
   const rgba = getRGBA(color)
+  const black = getBlackAlpha(color.a)
   return `
     <g transform="translate(${x - 0.5}, ${y - 0.5})">
-      <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="#000" fill="${rgba}" />
-      <circle r="0.4" cx="0.5" cy="0.6" fill="#000" filter="url(#blur)" />
-      <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="#000" fill="${rgba}" />
+      <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="${black}" fill="${rgba}" />
+      <circle r="0.4" cx="0.5" cy="0.6" fill="${black}" filter="url(#blur)" />
+      <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="${black}" fill="${rgba}" />
     </g>
   `
 }
 
 function getRGBA({ r, g, b, a }) {
   return `rgba(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)}, ${a != undefined ? Math.floor(a) : 1})`
+}
+
+function getBlackAlpha(a) {
+  return `rgba(0, 0, 0, ${a})`
 }
