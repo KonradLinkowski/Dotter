@@ -41,6 +41,8 @@ body {
   width: 25%;
   border-left: 2px solid black;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .header h1 {
@@ -51,6 +53,7 @@ body {
 
 .header p{
   margin-top: 0.5rem;
+  margin-bottom: 0;
   font-size: 1.3rem;
 }
 
@@ -295,6 +298,22 @@ body {
     border-top: 2px solid black;
     width: 100%;
   }
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.footer .link {
+  color: white;
+}
+
+.footer .link:hover {
+  text-decoration: none;
 }
 
 .spinner {
