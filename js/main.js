@@ -1,5 +1,7 @@
 import { listen, events, setRange, defaults } from './settings.js'
 import { loadImageData } from './image.js'
+import { createSVG } from "./dotter.js"
+import { Pixels } from "./image.js"
 
 (async () => {
   const $spinner = document.querySelector('#spinner')
@@ -10,11 +12,12 @@ import { loadImageData } from './image.js'
   let legoColors = null;
   let svgData = null
 
-  const worker = new Worker('./js/worker.js', { type: 'module' })
-
-  worker.onmessage = ({ data }) => {
+  const callback = (data) => {
     svgData = data
-    $main.innerHTML = data.svg
+    if ($main.firstChild) {
+      $main.removeChild($main.firstChild)
+    }
+    $main.appendChild(data.svg)
     $spinner.hidden = true
   }
 
@@ -55,11 +58,10 @@ import { loadImageData } from './image.js'
 
   function recalculate(imageData, columns, lego, legoColors) {
     $spinner.hidden = false
-    worker.postMessage({
-      imageData,
-      columns,
-      lego,
-      legoColors
+    setTimeout(() => {
+      const pixels = new Pixels(imageData)
+      const svg = createSVG(pixels, columns, lego, legoColors)
+      callback(svg)
     })
   }
 

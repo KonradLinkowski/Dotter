@@ -8,7 +8,7 @@ export function createSVG(pixels, columns = 50, lego = false, legoColors = false
   return {
     width: columns * 0.5 * 100,
     height: rows * 0.5 * 100,
-    svg: wrapSVG(columns, rows, dots.map(create).join('\n'))
+    svg: wrapSVG(columns, rows, dots.map(create))
   }
 }
 
@@ -51,34 +51,78 @@ function getDots(pixels, columns, rows, ratio, legoColors) {
 }
 
 function wrapSVG(width, height, data) {
-  const defs = `
-    <defs>
-      <filter height="200%" width="200%" y="-50%" x="-50%" id="blur">
-        <feGaussianBlur stdDeviation="0.2" in="SourceGraphic"/>
-      </filter>
-    </defs>
-  `
-  return `<svg class="dotter" viewBox="-0.5 -0.5 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
-    ${defs}  
-    ${data}
-  </svg>`
+  const $svg = createElement('svg')
+  $svg.setAttribute('class', 'dotter')
+  $svg.setAttribute('viewBox', `-0.5 -0.5 ${width} ${height}`)
+  $svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+
+  const $defs = createElement('defs')
+  $svg.appendChild($defs)
+
+  const $filter = createElement('filter')
+  $filter.setAttribute('height', '200%')
+  $filter.setAttribute('width', '200%')
+  $filter.setAttribute('x', '-50%')
+  $filter.setAttribute('y', '-50%')
+  $filter.setAttribute('id', 'blur')
+  $defs.appendChild($filter)
+  
+  const $feGaussianBlur = createElement('feGaussianBlur')
+  $feGaussianBlur.setAttribute('stdDeviation', '0.2')
+  $feGaussianBlur.setAttribute('in', 'SourceGraphic')
+  $filter.appendChild($feGaussianBlur)
+
+  data.forEach(d => {
+    $svg.appendChild(d)
+  })
+
+  return $svg
 }
 
 function createCircle({ x, y, color }) {
   const rgba = getRGBA(color)
-  return `<circle cx="${x}" cy="${y}" r="${0.45}" fill="${rgba}" />`
+  const $circle = createElement('circle')
+  $circle.setAttribute('cx', x)
+  $circle.setAttribute('cy', y)
+  $circle.setAttribute('r', '0.45')
+  $circle.setAttribute('fill', rgba)
+  return $circle
 }
 
 function createLego({ x, y, color }) {
   const rgba = getRGBA(color)
   const black = getBlackAlpha(color.a)
-  return `
-    <g transform="translate(${x - 0.5}, ${y - 0.5})">
-      <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="${black}" fill="${rgba}" />
-      <circle r="0.4" cx="0.5" cy="0.6" fill="${black}" filter="url(#blur)" />
-      <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="${black}" fill="${rgba}" />
-    </g>
-  `
+  const $g = createElement('g')
+  $g.transform = `translate(${x - 0.5}, ${y - 0.5})`
+
+  const $rect = createElement('rect')
+  $rect.height = 1
+  $rect.width = 1
+  $rect.x = 0
+  $rect.y = 0
+  $rect.strokeWidth = 0.01
+  $rect.stroke = black
+  $rect.fill = rgba
+  $g.appendChild($rect)
+
+  const $shadow = createElement('circle')
+  $shadow.r = 0.4
+  $shadow.cx = 0.5
+  $shadow.cy = 0.6
+  $shadow.fill = black
+  $shadow.filter = 'url(#blur)'
+  $rect.appendChild($shadow)
+
+  const $circle = createElement('circle')
+  $circle.r = 0.4
+  $circle.cx = 0.5
+  $circle.cy = 0.5
+  $circle.strokeWidth = 0.01
+  $circle.stroke = black
+  $circle.fill = rgba
+  $rect.appendChild($circle)
+
+  return $g
 }
 
 function getRGBA({ r, g, b, a }) {
@@ -87,4 +131,8 @@ function getRGBA({ r, g, b, a }) {
 
 function getBlackAlpha(a) {
   return `rgba(0, 0, 0, ${a})`
+}
+
+function createElement(name) {
+  return document.createElementNS('http://www.w3.org/2000/svg', name)
 }
