@@ -1,7 +1,11 @@
-export const defaults = {
+const defaults = {
   columns: 50,
   lego: false,
   legoColors: false
+}
+
+let currentValues = {
+  ...defaults
 }
 
 const $columns = document.querySelector('#columns')
@@ -44,25 +48,33 @@ export function setRange(max, min = 1) {
 export function listen(event, callback) {
   const map = {
     [events.COLUMNS_CHANGE]: () => {
-      callback(+$columns.value)
-      $columns.addEventListener('change', () => callback(+$columns.value))
+      $columns.addEventListener('change', () => {
+        const value = +$columns.value
+        currentValues.columns = value
+        callback(value)
+      })
     },
     [events.COLUMNS_INPUT]: () => {
-      callback(+$columns.value)
-      $columns.addEventListener('input', () => callback(+$columns.value))
+      $columns.addEventListener('input', () => {
+        const value = +$columns.value
+        currentValues.columns = value
+        callback(value)
+      })
     },
     [events.LEGO_CHANGE]: () => {
-      callback($lego.checked)
       $lego.addEventListener('change', () => {
-        $lego.parentNode.classList.toggle('checked', $lego.checked)
-        callback($lego.checked)
+        const value = $lego.checked
+        currentValues.lego = value
+        $lego.parentNode.classList.toggle('checked', value)
+        callback(value)
       })
     },
     [events.LEGO_COLORS_CHANGE]: () => {
-      callback($legoColors.checked)
       $legoColors.addEventListener('change', () => {
-        $legoColors.parentNode.classList.toggle('checked', $legoColors.checked)
-        callback($legoColors.checked)
+        const value = $legoColors.checked
+        currentValues.legoColors = value
+        $legoColors.parentNode.classList.toggle('checked', value)
+        callback(value)
       })
     },
     [events.FILE_UPLOAD]: () => addFileListeners(callback),
@@ -70,6 +82,12 @@ export function listen(event, callback) {
     [events.DOWNLOAD_SVG]: () => $downloadSVG.addEventListener('click', () => callback())
   }
   map[event]()
+}
+
+export function getCurrentValues() {
+  return {
+    ...currentValues
+  }
 }
 
 function addFileListeners(callback) {

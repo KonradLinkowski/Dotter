@@ -1,13 +1,10 @@
-import { listen, events, setRange, defaults } from './settings.js'
+import { listen, events, setRange, getCurrentValues } from './settings.js'
 import { loadImageData } from './image.js'
 
 (async () => {
   const $spinner = document.querySelector('#spinner')
   const $main = document.querySelector('#main')
   let imageData = null
-  let columns = null
-  let lego = null;
-  let legoColors = null;
   let svgData = null
 
   const worker = new Worker('./js/worker.js', { type: 'module' })
@@ -18,43 +15,32 @@ import { loadImageData } from './image.js'
     $spinner.hidden = true
   }
 
-  await loadNewImage('images/mona-lisa-small.jpg', false)  
-
   listen(events.FILE_UPLOAD, async blob => {
-    columns = defaults.columns
     setRange(imageData.width)
     loadNewImage(blob)
   })
   
-  listen(events.COLUMNS_CHANGE, value => {
-    columns = value
-    recalculate(imageData, columns, lego, legoColors)
-  })
-
-  listen(events.LEGO_CHANGE, value => {
-    lego = value
-    recalculate(imageData, columns, lego, legoColors)
-  })
-
-  listen(events.LEGO_COLORS_CHANGE, value => {
-    legoColors = value
-    recalculate(imageData, columns, lego, legoColors)
-  })
+  listen(events.COLUMNS_CHANGE, recalculate)
+  listen(events.LEGO_CHANGE, recalculate)
+  listen(events.LEGO_COLORS_CHANGE, recalculate)
 
   listen(events.DOWNLOAD_SVG, downloadSVG)
   listen(events.DOWNLOAD_PNG, downloadPNG)
+
+  await loadNewImage('images/mona-lisa-small.jpg')  
 
   async function loadNewImage(url, recalc = true) {
     $spinner.hidden = false
     imageData = await loadImageData(url)
     setRange(imageData.width)
     if (recalc) {
-      recalculate(imageData, columns, lego, legoColors)
+      recalculate()
     }
   }
 
-  function recalculate(imageData, columns, lego, legoColors) {
+  function recalculate() {
     $spinner.hidden = false
+    const { columns, lego, legoColors } = getCurrentValues()
     worker.postMessage({
       imageData,
       columns,
