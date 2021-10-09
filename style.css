@@ -8,6 +8,7 @@
   --background-color: #222831;
   --background-shadow-color: #393e46;
   --foreground-color: #eeeeee;
+  --spinner-size: 5rem;
 }
 
 *, *::before, *::after {
@@ -297,7 +298,7 @@ body {
   }
 }
 
-.spinner {
+.overlay {
   z-index: 1000;
   background-color: #0006;
   position: fixed;
@@ -311,38 +312,51 @@ body {
   align-items: center;
 }
 
-.spinner svg {
-  width: 6em;
-  transform-origin: center;
-  animation: rotate 2s linear infinite;
+.spinner {
+  height: var(--spinner-size);
+  width: var(--spinner-size);
 }
-.spinner circle {
-  fill: none;
-  stroke: var(--accent-color);
-  stroke-width: 4;
-  stroke-dasharray: 1, 200;
-  stroke-dashoffset: 0;
-  stroke-linecap: round;
-  animation: dash 1.5s ease-in-out infinite;
+.spinner > .item {
+  animation: move 0.5s linear infinite;
+  opacity: 0.1;
+}
+.spinner > .item:nth-of-type(1) {
+  animation-delay: -0.4375s;
+}
+.spinner > .item:nth-of-type(2) {
+  animation-delay: -0.375s;
+}
+.spinner > .item:nth-of-type(3) {
+  animation-delay: -0.3125s;
+}
+.spinner > .item:nth-of-type(4) {
+  animation-delay: -0.25s;
+}
+.spinner > .item:nth-of-type(5) {
+  animation-delay: -0.1875s;
+}
+.spinner > .item:nth-of-type(6) {
+  animation-delay: -0.125s;
+}
+.spinner > .item:nth-of-type(7) {
+  animation-delay: -0.0.625s;
+}
+.spinner > .item:nth-of-type(8) {
+  animation-delay: -0s;
 }
 
-@keyframes rotate {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes dash {
+@keyframes move {
   0% {
-    stroke-dasharray: 1, 200;
-    stroke-dashoffset: 0;
+    opacity: 0;
   }
-  50% {
-    stroke-dasharray: 90, 200;
-    stroke-dashoffset: -35px;
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0;
   }
   100% {
-    stroke-dashoffset: -125px;
+    opacity: 0;
   }
 }
 

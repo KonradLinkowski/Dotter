@@ -71,9 +71,53 @@
       </div>
     </section>
   </article>
-  <div hidden id="spinner" class="spinner">
-    <svg viewBox="25 25 50 50">
-      <circle cx="50" cy="50" r="20"></circle>
+  <div hidden id="spinner" class="overlay">
+    <svg class="spinner" class="dotter" viewBox="-0.5 -0.5 3 3" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+          <filter height="200%" width="200%" y="-50%" x="-50%" id="blur">
+              <feGaussianBlur stdDeviation="0.2" in="SourceGraphic"></feGaussianBlur>
+          </filter>
+      </defs>
+      <g class="item" transform="translate(-0.5, -0.5)">
+        <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></rect>
+        <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)"></circle>
+        <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></circle>
+      </g>
+      <g class="item" transform="translate(0.5, -0.5)">
+        <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></rect>
+        <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)"></circle>
+        <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></circle>
+      </g>
+      <g class="item" transform="translate(1.5, -0.5)">
+        <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></rect>
+        <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)"></circle>
+        <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></circle>
+      </g>
+      <g class="item" transform="translate(1.5, 0.5)">
+        <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></rect>
+        <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)"></circle>
+        <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></circle>
+      </g>
+      <g class="item" transform="translate(1.5, 1.5)">
+        <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></rect>
+        <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)"></circle>
+        <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></circle>
+      </g>
+      <g class="item" transform="translate(0.5, 1.5)">
+        <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></rect>
+        <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)"></circle>
+        <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></circle>
+      </g>
+      <g class="item" transform="translate(-0.5, 1.5)">
+        <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></rect>
+        <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)"></circle>
+        <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></circle>
+      </g>
+      <g class="item" transform="translate(-0.5, 0.5)">
+        <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></rect>
+        <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)"></circle>
+        <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(214, 90, 49, 255)"></circle>
+      </g>
     </svg>
   </div>
 </body>
