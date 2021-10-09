@@ -1,6 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" class="dotter" viewBox="-0.45 -0.45 1.9 1.9">
-  <circle cx="0" cy="0" r="0.45" fill="rgba(111, 117, 69, 255)"/>
-  <circle cx="1" cy="0" r="0.45" fill="rgba(91, 87, 59, 255)"/>
-  <circle cx="0" cy="1" r="0.45" fill="rgba(199, 162, 81, 255)"/>
-  <circle cx="1" cy="1" r="0.45" fill="rgba(29, 16, 31, 255)"/>
+<svg xmlns="http://www.w3.org/2000/svg" class="dotter" viewBox="-0.5 -0.5 2 2">
+  <defs>
+    <filter height="200%" width="200%" y="-50%" x="-50%" id="blur">
+      <feGaussianBlur stdDeviation="0.2" in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="translate(-0.5, -0.5)">
+    <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="#d65a31" />
+    <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)" />
+    <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="#d65a31" />
+  </g>
+  <g transform="translate(0.5, 0.5)">
+    <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="#222831" />
+    <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)" />
+    <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="#222831" />
+  </g>
+  <g transform="translate(0.5, -0.5)">
+    <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(199, 162, 81, 255)" />
+    <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)" />
+    <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="rgba(199, 162, 81, 255)" />
+  </g>
+  <g transform="translate(-0.5, 0.5)">
+    <rect height="1" width="1" x="0" y="0" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="#eeeeee" />
+    <circle r="0.4" cx="0.5" cy="0.6" fill="rgba(0, 0, 0, 255)" filter="url(#blur)" />
+    <circle r="0.4" cx="0.5" cy="0.5" stroke-width="0.01" stroke="rgba(0, 0, 0, 255)" fill="#eeeeee" />
+  </g>
 </svg>
