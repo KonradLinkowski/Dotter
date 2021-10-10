@@ -317,17 +317,18 @@ body {
 }
 
 .spinner {
-  z-index: 1000;
-  background-color: #0006;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position:absolute;
+  bottom: 45%;
+  left:45%;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border: 10px solid rgba(243, 243, 243, 0.05);
+  border-radius: 50%;
+  border-top: 10px solid #d65a31;
+  border-right: 10px solid #d65a31;
+  border-bottom: 10px solid #d65a31;
+  width: 100px;
+  height: 100px;
+  animation: rotate 2s linear infinite;
 }
 
 .spinner svg {
