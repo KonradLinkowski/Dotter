@@ -5,10 +5,12 @@ export function createSVG(pixels, columns = 50, lego = false, legoColors = false
   const rows = Math.floor(pixels.height * ratio)
   const dots = getDots(pixels, columns, rows, ratio, legoColors)
   const create = lego ? createLego : createCircle
+  const pixelWidth = columns * 0.5 * 100
+  const pixelHeight = rows * 0.5 * 100
   return {
-    width: columns * 0.5 * 100,
-    height: rows * 0.5 * 100,
-    svg: wrapSVG(columns, rows, dots.map(create).join('\n'))
+    width: pixelWidth,
+    height: pixelHeight,
+    svg: wrapSVG(columns, rows, pixelWidth, pixelHeight, dots.map(create).join('\n'))
   }
 }
 
@@ -50,7 +52,7 @@ function getDots(pixels, columns, rows, ratio, legoColors) {
   }
 }
 
-function wrapSVG(width, height, data) {
+function wrapSVG(width, height, pixelWidth, pixelHeight, data) {
   const defs = `
     <defs>
       <filter height="200%" width="200%" y="-50%" x="-50%" id="blur">
@@ -58,7 +60,7 @@ function wrapSVG(width, height, data) {
       </filter>
     </defs>
   `
-  return `<svg class="dotter" viewBox="-0.5 -0.5 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+  return `<svg class="dotter" viewBox="-0.5 -0.5 ${width} ${height}" width="${pixelWidth}" height="${pixelHeight}" xmlns="http://www.w3.org/2000/svg">
     ${defs}  
     ${data}
   </svg>`

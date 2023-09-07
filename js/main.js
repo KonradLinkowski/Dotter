@@ -19,7 +19,7 @@ import { loadImageData } from './image.js'
     setRange(imageData.width)
     loadNewImage(blob)
   })
-  
+
   listen(events.COLUMNS_CHANGE, recalculate)
   listen(events.LEGO_CHANGE, recalculate)
   listen(events.LEGO_COLORS_CHANGE, recalculate)
@@ -27,7 +27,7 @@ import { loadImageData } from './image.js'
   listen(events.DOWNLOAD_SVG, downloadSVG)
   listen(events.DOWNLOAD_PNG, downloadPNG)
 
-  await loadNewImage('images/mona-lisa-small.jpg')  
+  await loadNewImage('images/mona-lisa-small.jpg')
 
   async function loadNewImage(url, recalc = true) {
     $spinner.hidden = false
@@ -50,7 +50,7 @@ import { loadImageData } from './image.js'
   }
 
   function downloadPNG() {
-    const blob = new Blob([svgData.svg], { type:'image/svg+xml;charset=utf-8' })
+    const blob = new Blob([svgData.svg], { type: 'image/svg+xml;charset=utf-8' })
     const $img = new Image()
     $img.onload = () => {
       const $canvas = document.createElement('canvas')
